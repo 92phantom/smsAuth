@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// SMS API
+	implementation group: 'ru.sms-activate', name: 'SMSActivateApi', version: '1.5.8'
+
+}
+
+test {
+	useJUnitPlatform()
+}
+tasks.jar {
+	enabled = true
+}
+
+tasks.bootJar {
+	enabled = true
+//  classifier�뒗 deprecated �릺�뿀�쑝�땲 archiveClassifier瑜� �꽕�젙
+//  classifier = "boot"
+	archiveClassifier.set("boot")
+	mainClassName = "com.smsActivate.ui.ApiAuthFrame"
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding= "UTF-8"
+}
